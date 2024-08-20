@@ -1,0 +1,127 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.10 (swiftlang-5.10.0.13 clang-1500.3.9.4)
+// swift-module-flags: -target x86_64-apple-ios14.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-bare-slash-regex -module-name FTTS
+import AVFoundation
+import Foundation
+import MobileCoreServices
+import Swift
+import UIKit
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+import os.log
+import os
+@objc public protocol FTechTTSMangerDelegate {
+  @objc optional func onFailure(error: FTTS.FTError)
+  @objc optional func onSuccess(data: FTTS.TTSResponse)
+}
+@objc @_inheritsConvenienceInitializers final public class FTechTTSManager : ObjectiveC.NSObject {
+  public static func instance() -> FTTS.FTechTTSManager
+  weak final public var delegate: (any FTTS.FTechTTSMangerDelegate)?
+  final public func initSDK(appId: Swift.String, key: Swift.String, onSuccess: @escaping () -> Swift.Void, onFailure: @escaping (FTTS.FTError) -> Swift.Void)
+  final public func getLanguageConfig(onSuccess: @escaping (_ config: [FTTS.LanguageConfigData]) -> Swift.Void, onFailure: @escaping (FTTS.FTError) -> Swift.Void)
+  final public func startTTS(language: Swift.String, voice: Swift.String, content: Swift.String, isPlayAudio: Swift.Bool)
+  final public func startTTS(with file: Foundation.URL, language: Swift.String, voice: Swift.String)
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class FTError : Foundation.NSError {
+  @objc public init(code: Swift.Int, message: Swift.String)
+  @objc deinit
+}
+@objc @objcMembers public class LanguageConfigData : ObjectiveC.NSObject, Swift.Codable {
+  @objc final public let configId: Swift.String, name: Swift.String
+  @objc final public let voice: [FTTS.VoiceResponse]
+  @objc deinit
+  public func encode(to encoder: any Swift.Encoder) throws
+  required public init(from decoder: any Swift.Decoder) throws
+}
+@objc @objcMembers public class VoiceResponse : ObjectiveC.NSObject, Swift.Codable {
+  @objc final public let configId: Swift.String, name: Swift.String
+  @objc deinit
+  public func encode(to encoder: any Swift.Encoder) throws
+  required public init(from decoder: any Swift.Decoder) throws
+}
+public enum FTHTTPStatusCode : Swift.Int, Swift.Error {
+  case `continue`
+  case switchingProtocols
+  case processing
+  case ok
+  case created
+  case accepted
+  case nonAuthoritativeInformation
+  case noContent
+  case resetContent
+  case partialContent
+  case multiStatus
+  case alreadyReported
+  case IMUsed
+  case multipleChoices
+  case movedPermanently
+  case found
+  case seeOther
+  case notModified
+  case useProxy
+  case switchProxy
+  case temporaryRedirect
+  case permenantRedirect
+  case badRequest
+  case unauthorized
+  case paymentRequired
+  case forbidden
+  case notFound
+  case methodNotAllowed
+  case notAcceptable
+  case proxyAuthenticationRequired
+  case requestTimeout
+  case conflict
+  case gone
+  case lengthRequired
+  case preconditionFailed
+  case payloadTooLarge
+  case URITooLong
+  case unsupportedMediaType
+  case rangeNotSatisfiable
+  case expectationFailed
+  case teapot
+  case misdirectedRequest
+  case unprocessableEntity
+  case locked
+  case failedDependency
+  case upgradeRequired
+  case preconditionRequired
+  case tooManyRequests
+  case requestHeaderFieldsTooLarge
+  case noResponse
+  case unavailableForLegalReasons
+  case SSLCertificateError
+  case SSLCertificateRequired
+  case HTTPRequestSentToHTTPSPort
+  case clientClosedRequest
+  case internalServerError
+  case notImplemented
+  case badGateway
+  case serviceUnavailable
+  case gatewayTimeout
+  case HTTPVersionNotSupported
+  case variantAlsoNegotiates
+  case insufficientStorage
+  case loopDetected
+  case notExtended
+  case networkAuthenticationRequired
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc @objcMembers public class TTSResponse : ObjectiveC.NSObject, Swift.Codable {
+  @objc final public let audioUrl: Swift.String?
+  @objc final public let audioUrls: [Swift.String]?
+  @objc deinit
+  public func encode(to encoder: any Swift.Encoder) throws
+  required public init(from decoder: any Swift.Decoder) throws
+}
+extension FTTS.FTHTTPStatusCode : Swift.Equatable {}
+extension FTTS.FTHTTPStatusCode : Swift.Hashable {}
+extension FTTS.FTHTTPStatusCode : Swift.RawRepresentable {}
